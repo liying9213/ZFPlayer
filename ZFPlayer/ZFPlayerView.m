@@ -1320,7 +1320,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 }
 
 - (void)setHasFullScreen:(BOOL)hasFullScreen{
-    [self.controlView zf_playerNormalFullScreen];
+    [self.controlView zf_playerHasFullScreenFunction];
 }
 
 - (void)setResolutionDic:(NSDictionary *)resolutionDic
