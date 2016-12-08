@@ -94,13 +94,16 @@
     // 设置代理
     self.playerView.delegate = self;
     
+    self.playerView.hiddenFullScreenButton = YES;
     //（可选设置）可以设置视频的填充模式，内部设置默认（ZFPlayerLayerGravityResizeAspect：等比例填充，直到一个维度到达区域边界）
     // self.playerView.playerLayerGravity = ZFPlayerLayerGravityResizeAspect;
     
     // 打开下载功能（默认没有这个功能）
-    self.playerView.hasDownload    = YES;
+    self.playerView.hasDownload    = NO;
     // 打开预览图
     self.playerView.hasPreviewView = YES;
+    
+    self.playerView.isLive = YES;
     
     // 是否自动播放，默认不自动播放
     [self.playerView autoPlayTheVideo];

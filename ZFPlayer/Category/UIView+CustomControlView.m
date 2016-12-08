@@ -50,6 +50,10 @@
 - (void)zf_playerHideControlView{}
 
 /**
+ * 隐藏全屏按钮*/
+- (void)zf_playerHasFullScreenFunction{}
+
+/**
  * 重置ControlView
  */
 - (void)zf_playerResetControlView{}

@@ -102,7 +102,9 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 /** 是否播放结束 */
 @property (nonatomic, assign, getter=isPlayEnd) BOOL  playeEnd;
 /** 是否全屏播放 */
-@property (nonatomic, assign,getter=isFullScreen)BOOL fullScreen;
+@property (nonatomic, assign, getter=isFullScreen) BOOL fullScreen;
+/** 默认全屏播放（默认不是） */
+@property (nonatomic, assign, getter=isNormalFullScreen) BOOL normalFullScreen;
 
 @end
 
@@ -1022,6 +1024,17 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
         [self hideControlView];
     }completion:^(BOOL finished) {
         self.showing = NO;
+    }];
+}
+
+/**
+ * 默认全屏播放*/
+- (void)zf_playerHasFullScreenFunction{
+    self.fullScreenBtn.hidden = YES;
+    [self.fullScreenBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.mas_equalTo(0);
+        make.trailing.equalTo(self.bottomImageView.mas_trailing).offset(-5);
+        make.centerY.equalTo(self.startBtn.mas_centerY);
     }];
 }
 

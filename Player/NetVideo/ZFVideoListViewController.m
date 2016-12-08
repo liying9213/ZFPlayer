@@ -34,7 +34,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.dataSource = @[@"http://devstreaming.apple.com/videos/wwdc/2015/413eflf3lrh1tyo/413/0640/0640.m3u8",
-                        @"http://wvideo.spriteapp.cn/video/2016/0328/56f8ec01d9bfe_wpd.mp4",
+                        @"http://public-oss.oss-cn-beijing.aliyuncs.com/streams/2016-12-7/16/video/index.m3u8",
                         @"http://baobab.wdjcdn.com/1456117847747a_x264.mp4",
                         @"http://baobab.wdjcdn.com/14525705791193.mp4",
                         @"http://baobab.wdjcdn.com/1456459181808howtoloseweight_x264.mp4",

@@ -59,6 +59,10 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 @property (nonatomic, assign) ZFPlayerLayerGravity    playerLayerGravity;
 /** 是否有下载功能(默认是关闭) */
 @property (nonatomic, assign) BOOL                    hasDownload;
+/** 是否是”直播“(不显示进度、时间，不可调节进度、暂停、下载...)(默认不是) */
+@property (nonatomic, assign) BOOL                    isLive;
+/** 是否隐藏全屏按钮(默认不是) */
+@property (nonatomic, assign) BOOL                    hasFullScreen;
 /** 是否开启预览图 */
 @property (nonatomic, assign) BOOL                    hasPreviewView;
 /** 设置代理 */
@@ -73,6 +77,8 @@ typedef NS_ENUM(NSInteger, ZFPlayerState) {
 @property (nonatomic, assign) BOOL                    stopPlayWhileCellNotVisable;
 /** 当cell播放视频由全屏变为小屏时候，是否回到中间位置(默认YES) */
 @property (nonatomic, assign) BOOL                    cellPlayerOnCenter;
+
+
 
 /**
  *  单例，用于列表cell上多个视频

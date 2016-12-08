@@ -1315,6 +1315,14 @@ typedef NS_ENUM(NSInteger, PanDirection){
     [self.controlView zf_playerHasDownloadFunction:hasDownload];
 }
 
+- (void)setIsLive:(BOOL)isLive{
+    _isLive = isLive;
+}
+
+- (void)setHasFullScreen:(BOOL)hasFullScreen{
+    [self.controlView zf_playerNormalFullScreen];
+}
+
 - (void)setResolutionDic:(NSDictionary *)resolutionDic
 {
     _resolutionDic = resolutionDic;
