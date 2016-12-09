@@ -45,6 +45,10 @@
  * 隐藏全屏按钮*/
 - (void)zf_playerHasFullScreenFunction;
 
+/**
+ * "直播功能"(隐藏所有功能包括：进度、暂停、时间)*/
+- (void)zf_playerHasLiveFunction;
+
 /** 
  * 重置ControlView
  */

@@ -103,9 +103,8 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 @property (nonatomic, assign, getter=isPlayEnd) BOOL  playeEnd;
 /** 是否全屏播放 */
 @property (nonatomic, assign, getter=isFullScreen) BOOL fullScreen;
-/** 默认全屏播放（默认不是） */
-@property (nonatomic, assign, getter=isNormalFullScreen) BOOL normalFullScreen;
-
+/** 是否"直播" */
+@property (nonatomic, assign, getter=isLive) BOOL live;
 @end
 
 @implementation ZFPlayerControlView
@@ -566,6 +565,13 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 
 - (void)showControlView
 {
+    if (self.isLive) {
+        [self hideControlView];
+        self.topImageView.alpha    = 1;
+        return;
+    }
+    
+    
     if (self.lockBtn.isSelected) {
         self.topImageView.alpha    = 0;
         self.bottomImageView.alpha = 0;
@@ -1038,6 +1044,14 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
     }];
 }
 
+/**
+ * "直播功能"(隐藏所有功能包括：进度、暂停、时间)*/
+- (void)zf_playerHasLiveFunction{
+    self.live = YES;
+    [self zf_playerShowControlView];
+}
+
+
 /** 小屏播放 */
 - (void)zf_playerBottomShrinkPlay
 {
@@ -1164,6 +1178,13 @@ static const CGFloat ZFPlayerControlBarAutoFadeOutTimeInterval = 0.35f;
 /** 播放完了 */
 - (void)zf_playerPlayEnd
 {
+    if (self.isLive && self.isFullScreen) {
+        if ([self.delegate respondsToSelector:@selector(zf_controlView:fullScreenAction:)]) {
+            [self.delegate zf_controlView:self fullScreenAction:nil];
+        }
+        return;
+    }
+    
     self.repeatBtn.hidden = NO;
     self.playeEnd         = YES;
     self.showing          = NO;

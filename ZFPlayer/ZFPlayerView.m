@@ -930,6 +930,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
  */
 - (void)doubleTapAction:(UIGestureRecognizer *)gesture
 {
+    if (self.isLive) { return; }
     if (self.playDidEnd) { return;  }
     // 显示控制层
     [self.controlView zf_playerCancelAutoFadeOutControlView];
@@ -1066,11 +1067,13 @@ typedef NS_ENUM(NSInteger, PanDirection){
             CGFloat x = fabs(veloctyPoint.x);
             CGFloat y = fabs(veloctyPoint.y);
             if (x > y) { // 水平移动
-                // 取消隐藏
-                self.panDirection = PanDirectionHorizontalMoved;
-                // 给sumTime初值
-                CMTime time       = self.player.currentTime;
-                self.sumTime      = time.value/time.timescale;
+                if (!self.isLive) {
+                    // 取消隐藏
+                    self.panDirection = PanDirectionHorizontalMoved;
+                    // 给sumTime初值
+                    CMTime time       = self.player.currentTime;
+                    self.sumTime      = time.value/time.timescale;
+                }
             }
             else if (x < y){ // 垂直移动
                 self.panDirection = PanDirectionVerticalMoved;
@@ -1086,7 +1089,9 @@ typedef NS_ENUM(NSInteger, PanDirection){
         case UIGestureRecognizerStateChanged:{ // 正在移动
             switch (self.panDirection) {
                 case PanDirectionHorizontalMoved:{
-                    [self horizontalMoved:veloctyPoint.x]; // 水平移动的方法只要x方向的值
+                    if (!self.isLive) {
+                        [self horizontalMoved:veloctyPoint.x]; // 水平移动的方法只要x方向的值
+                    }
                     break;
                 }
                 case PanDirectionVerticalMoved:{
@@ -1103,10 +1108,12 @@ typedef NS_ENUM(NSInteger, PanDirection){
             // 比如水平移动结束时，要快进到指定位置，如果这里没有判断，当我们调节音量完之后，会出现屏幕跳动的bug
             switch (self.panDirection) {
                 case PanDirectionHorizontalMoved:{
-                    self.isPauseByUser = NO;
-                    [self seekToTime:self.sumTime completionHandler:nil];
-                    // 把sumTime滞空，不然会越加越多
-                    self.sumTime = 0;
+                    if (!self.isLive) {
+                        self.isPauseByUser = NO;
+                        [self seekToTime:self.sumTime completionHandler:nil];
+                        // 把sumTime滞空，不然会越加越多
+                        self.sumTime = 0;
+                    }
                     break;
                 }
                 case PanDirectionVerticalMoved:{
@@ -1141,6 +1148,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
  */
 - (void)horizontalMoved:(CGFloat)value
 {
+    
     // 每次滑动需要叠加时间
     self.sumTime += value / 200;
     
@@ -1317,6 +1325,7 @@ typedef NS_ENUM(NSInteger, PanDirection){
 
 - (void)setIsLive:(BOOL)isLive{
     _isLive = isLive;
+    [self.controlView zf_playerHasLiveFunction];
 }
 
 - (void)setHasFullScreen:(BOOL)hasFullScreen{
